@@ -1,0 +1,50 @@
+/* Gerakan singkat dan konsisten, tanpa mengubah susunan/identitas halaman. */
+.page-intro { position: fixed; inset: 0 0 auto; height: 2px; z-index: 70; pointer-events: none; }
+.page-intro > div { height: 100%; background: var(--color-accent); transform-origin: left; }
+.mobile-menu-shell { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; transition: grid-template-rows 220ms ease, opacity 180ms ease, visibility 0s 220ms; }
+.mobile-menu-shell.is-open { grid-template-rows: 1fr; opacity: 1; visibility: visible; transition: grid-template-rows 220ms ease, opacity 180ms ease, visibility 0s; }
+.mobile-menu-shell:not(.is-open) { pointer-events: none; }
+.mobile-menu-clip { min-height: 0; overflow: hidden; }
+.menu-toggle > svg { transition: transform 200ms ease; }
+.menu-toggle.is-open > svg { transform: rotate(90deg); }
+.button, .icon-button, .music-play-button { transition-duration: 200ms; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+.project-card, .certificate-card { transition: border-color 200ms ease, box-shadow 200ms ease; }
+.project-card:focus-within, .certificate-card:focus-within { border-color: #c2ed8266; }
+.media-button .asset-image { transition: opacity 180ms ease; }
+.media-open-indicator { transition: transform 180ms ease, background 180ms ease; }
+.lightbox-hint { color: #8b9880; font-size: 10px; line-height: 1.8; margin-top: 17px; }
+.lightbox-viewport { scrollbar-width: thin; scrollbar-color: #77896a #171c15; }
+.lightbox-viewport:focus-visible { outline-offset: 3px; }
+.dialog-surface { transform-origin: center; }
+.portfolio-dialog { box-shadow: 0 25px 100px #00000050; }
+.portfolio-dialog::backdrop { animation: dialog-backdrop-in 220ms ease both; }
+.portfolio-dialog[data-closing='true']::backdrop { animation: dialog-backdrop-out 160ms ease both; }
+.floating-top { position: fixed; right: 24px; bottom: 24px; z-index: 20; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: conic-gradient(var(--color-accent) var(--scroll-progress, 0deg), #38432f 0deg); color: var(--color-accent); box-shadow: 0 4px 25px #00000030; opacity: 0; visibility: hidden; transform: translateY(8px); pointer-events: none; transition: opacity 200ms ease, transform 200ms ease, visibility 0s 200ms; }
+.floating-top::before { content: ''; position: absolute; inset: 2px; border-radius: 50%; background: #171e14; }
+.floating-top > svg { position: relative; z-index: 1; }
+.floating-top.is-visible { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition: opacity 200ms ease, transform 200ms ease, visibility 0s; }
+
+@keyframes dialog-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dialog-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
+@media (min-width: 1024px) { .mobile-menu-shell { display: none; } }
+@media (max-width: 767px) {
+  .floating-top { right: 16px; bottom: 16px; }
+  .lightbox-hint { font-size: 9px; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover, .certificate-card:hover { border-color: #c2ed8240; box-shadow: 0 10px 35px #00000014; }
+  .media-button:hover .asset-image { opacity: 0.9; }
+  .media-button:hover .media-open-indicator { transform: translate(2px, -2px); background: #26351d; }
+  .floating-top:hover { color: #e1f6c8; }
+}
+@media (hover: none) {
+  .button:hover, .software-item:hover, .music-play-button:hover:not(:disabled), .project-open:hover .project-heading svg { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .page-intro { display: none; }
+  .mobile-menu-shell, .floating-top, .menu-toggle > svg, .media-button .asset-image { transition: none; }
+  .portfolio-dialog::backdrop { animation: none; }
+  [data-reveal-state], .dialog-surface { opacity: 1 !important; transform: none !important; }
+  .button:hover, .software-item:hover, .music-play-button:hover:not(:disabled), .project-open:hover .project-heading svg, .media-button:hover .media-open-indicator { transform: none !important; }
+}
